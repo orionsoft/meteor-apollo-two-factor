@@ -1,0 +1,12 @@
+type Mutation {
+  generateTwoFactorSecret: TwoFactorInit
+  activateTwoFactor (code: String!): User
+  # Logins the user with two factor code
+  loginWithTwoFactor (
+    username: String,
+    email: String,
+    password: HashedPassword,
+    plainPassword: String
+    code: String
+  ): LoginMethodResponse
+}

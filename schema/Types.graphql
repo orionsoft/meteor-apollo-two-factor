@@ -1,0 +1,8 @@
+type User {
+  hasTwoFactor: Boolean
+}
+
+type TwoFactorInit {
+  base32: String
+  qrCode: String
+}
