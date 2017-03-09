@@ -8,10 +8,11 @@ export default async function (root, params, context) {
   const {base32} = speakeasy.generateSecret()
   Meteor.users.update(user._id, {$set: {'services.twoFactor.base32': base32, 'services.twoFactor.enabled': false}})
 
-  const issuer = Meteor.settings.twoFactorIssuer || 'Orionsoft'
+  const issuer = encodeURIComponent(Meteor.settings.twoFactorIssuer || 'Orionsoft')
   const email = user.emails[0].address
 
   const url = `otpauth://totp/${issuer}:${email}?secret=${base32}&issuer=${issuer}`
+
   const qrCode = qr.imageSync(url, {type: 'svg'})
 
   return {
