@@ -7,4 +7,4 @@ yarn add speakeasy qr-image
 
 Only thing you have to do is set:
 
-Meteor.settings.twoFactorIssuer
+```Meteor.settings.twoFactorIssuer```
