@@ -8,6 +8,12 @@ Accounts.validateLoginAttempt(function ({user, methodArguments}) {
   if (!user.services.twoFactor.enabled) return true
   const args = methodArguments[0]
   if (!args.password) return true
+
+  const {error} = Accounts._checkPassword(user, args.password)
+  if (error) {
+    throw error
+  }
+
   if (!args.twoFactor) {
     throw new Meteor.Error('need-two-factor', 'User needs two factor auth code')
   }
@@ -28,10 +34,10 @@ Accounts.registerLoginHandler('twofactor', function (options) {
     throw new Meteor.Error(403, 'User has no two factor enabled')
   }
 
-  const {userId} = Accounts._checkPassword(user, twoFactor.password)
+  const {userId, error} = Accounts._checkPassword(user, twoFactor.password)
 
-  if (!userId) {
-    throw new Meteor.Error(403, 'Password is incorrect')
+  if (error) {
+    throw error
   }
 
   const verified = speakeasy.totp.verify({ secret: user.services.twoFactor.base32, encoding: 'base32', token: twoFactor.code })
@@ -40,7 +46,5 @@ Accounts.registerLoginHandler('twofactor', function (options) {
     throw new Meteor.Error(403, 'Two factor code is incorrect')
   }
 
-  return {
-    userId
-  }
+  return {userId}
 })
