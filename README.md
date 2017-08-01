@@ -5,6 +5,12 @@ meteor add orionsoft:meteor-apollo-two-factor
 yarn add speakeasy qr-image
 ```
 
-Only thing you have to do is set:
+Only thing you have to do is set the options in meteor settings:
 
-```Meteor.settings.twoFactorIssuer```
+```json
+{
+  "twoFactor": {
+    "issuer": "My App Name",
+    "forceLogin": true
+  }
+}

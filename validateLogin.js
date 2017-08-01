@@ -1,8 +1,12 @@
 import {Accounts} from 'meteor/accounts-base'
 import {Meteor} from 'meteor/meteor'
 import speakeasy from 'speakeasy'
+import getSettings from './getSettings'
+
+const settings = getSettings()
 
 Accounts.validateLoginAttempt(function ({user, methodArguments}) {
+  if (!settings.forceLogin) return true
   if (!user) return true
   if (!user.services.twoFactor) return true
   if (!user.services.twoFactor.enabled) return true
