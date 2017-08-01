@@ -14,3 +14,11 @@ Only thing you have to do is set the options in meteor settings:
     "forceLogin": true
   }
 }
+
+To manually validate
+
+```js
+import {validateTwoFactor} from 'meteor/orionsoft:meteor-apollo-two-factor'
+
+validateTwoFactor(user, token)
+```
