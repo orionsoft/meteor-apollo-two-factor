@@ -14,6 +14,7 @@ Only thing you have to do is set the options in meteor settings:
     "forceLogin": true
   }
 }
+```
 
 To manually validate
 
