@@ -2,7 +2,7 @@
 
 Package.describe({
   name: 'orionsoft:meteor-apollo-two-factor',
-  version: '1.1.2',
+  version: '1.2.0',
   // Brief, one-line summary of the package.
   summary: 'Two Factor Auth for Meteor accounts in GraphQL',
   // URL to the Git repository containing the source code for this package.
