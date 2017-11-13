@@ -5,7 +5,7 @@ import getSettings from './getSettings'
 
 const settings = getSettings()
 
-Accounts.validateLoginAttempt(function ({user, methodArguments}) {
+Accounts.validateLoginAttempt(function({user, methodArguments}) {
   if (!settings.forceLogin) return true
   if (!user) return true
   if (!user.services.twoFactor) return true
@@ -23,7 +23,7 @@ Accounts.validateLoginAttempt(function ({user, methodArguments}) {
   }
 })
 
-Accounts.registerLoginHandler('twofactor', function (options) {
+Accounts.registerLoginHandler('twofactor', function(options) {
   const {twoFactor} = options
   if (!twoFactor) return
 
@@ -44,7 +44,12 @@ Accounts.registerLoginHandler('twofactor', function (options) {
     throw error
   }
 
-  const verified = speakeasy.totp.verify({ secret: user.services.twoFactor.base32, encoding: 'base32', token: twoFactor.code })
+  const verified = speakeasy.totp.verify({
+    secret: user.services.twoFactor.base32,
+    encoding: 'base32',
+    token: twoFactor.code,
+    window: 2
+  })
 
   if (!verified) {
     throw new Meteor.Error(403, 'Two factor code is incorrect')
